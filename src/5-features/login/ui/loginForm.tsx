@@ -11,8 +11,8 @@ export const LoginForm = () => {
 	const dispatch = useAppDispatch()
 	const form = useForm<ILoginForm>({
 		initialValues: {
-			email: '',
-			password: '',
+			email: 'test@gmail.com',
+			password: '1234',
 		},
 
 		validate: {

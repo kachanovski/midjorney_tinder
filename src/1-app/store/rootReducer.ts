@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit'
 
-import { authSlice } from '6-entities/auth'
-import {discordSlice} from "6-entities/discord";
+import {promtSlice} from "6-entities/promts";
+import {userSlice} from "6-entities/user";
 
 export const rootReducer = combineReducers({
-  [authSlice.name]: authSlice.reducer,
-  [discordSlice.name]: discordSlice.reducer,
+  [userSlice.name]: userSlice.reducer,
+  [promtSlice.name]: promtSlice.reducer,
 })

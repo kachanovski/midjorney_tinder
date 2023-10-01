@@ -1,9 +1,10 @@
 import {useEffect} from "react";
 import {Outlet, useNavigate} from 'react-router-dom'
 
-import {selectIsAuth} from "6-entities/auth";
+import {selectIsAuth} from "6-entities/user";
 import {useAppDispatch, useAppSelector} from "7-shared/hooks";
 import {PATH_PAGE} from "7-shared/lib/router";
+
 import {getMeThunk} from "../model/getMe";
 
 export const InitLayout = () => {
@@ -15,7 +16,7 @@ export const InitLayout = () => {
     if(!isAuth){
       dispatch(getMeThunk())
     }
-  },[])
+  },[isAuth, dispatch])
 
   useEffect(() => {
     if (isAuth) {

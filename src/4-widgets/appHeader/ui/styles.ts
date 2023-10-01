@@ -13,12 +13,6 @@ export const useStyles = createStyles((theme) => ({
 		alignItems: 'center',
 	},
 
-	links: {
-		[theme.fn.smallerThan('md')]: {
-			display: 'none',
-		},
-	},
-
 	link: {
 		display: 'block',
 		lineHeight: 1,

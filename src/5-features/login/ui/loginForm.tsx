@@ -2,7 +2,7 @@ import React from 'react';
 import {useForm} from "@mantine/form";
 import {Button, Flex, PasswordInput, TextInput} from "@mantine/core";
 
-import {ILoginForm} from "6-entities/auth";
+import {ILoginForm} from "6-entities/user";
 import {useAppDispatch} from "7-shared/hooks";
 
 import {loginThunk} from "../model/login";

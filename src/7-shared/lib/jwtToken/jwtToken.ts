@@ -7,6 +7,14 @@ export const JWTToken = {
   },
   removeToken() {
     localStorage.removeItem('access_token')
-    localStorage.removeItem('refresh_token')
+  },
+  getAccessDiscord() {
+    return localStorage.getItem('access_token_discord')
+  },
+  setAccessDiscord(access_token: string) {
+    localStorage.setItem('access_token_discord', access_token)
+  },
+  removeTokenDiscord() {
+    localStorage.removeItem('access_token_discord')
   },
 }

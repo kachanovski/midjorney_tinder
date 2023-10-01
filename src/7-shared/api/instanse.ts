@@ -3,20 +3,25 @@ import {JWTToken} from "../lib/jwtToken";
 
 export const instance = axios.create({
 	withCredentials: false,
-	baseURL: "http://localhost:8000/api",
+	baseURL: "http://109.172.83.22/api",
 });
 
 export const discordInstance = axios.create({
-	withCredentials: true,
+	withCredentials: false,
 	baseURL: "https://discord.com/api",
-	headers: {
-		Authorization: 'NjczNTc5ODU1MjQ5NjcwMTQ5.GBFMla.Qmfm4UpA5fqk2OIes6Te-ySOdqkRB0ePWEUgKs'
-	}
 });
 
 instance.interceptors.request.use(
 	(config) => {
 		config.headers.Authorization = `${JWTToken.getAccess()}`;
+		return config;
+	},
+	(error) => Promise.reject(error)
+);
+
+discordInstance.interceptors.request.use(
+	(config) => {
+		config.headers.Authorization = `${JWTToken.getAccessDiscord()}`;
 		return config;
 	},
 	(error) => Promise.reject(error)

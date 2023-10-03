@@ -35,8 +35,10 @@ export const getDiscordMessagesThunk = createAsyncThunk<void, void, { state: Roo
 			})).filter(i => !i?.value?.includes('http')).filter(i => !i?.value?.includes('https'))
 
 			const res = await promtApi.setPromts(promt)
-			UploadLimit.updateUploadLimit(res.data.upload_count)
-			dispatch(setUploadLimit(limit - res.data.upload_count))
+			if(Number(res.data.upload_count)){
+				UploadLimit.updateUploadLimit(Number(res.data.upload_count))
+				dispatch(setUploadLimit(limit - Number(res.data.upload_count)))
+			}
 
 		} catch (error: any) {
 			const status = error?.response?.request?.status

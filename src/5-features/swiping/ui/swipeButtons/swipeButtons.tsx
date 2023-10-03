@@ -1,6 +1,5 @@
 import React from 'react';
 import {Button, Flex} from "@mantine/core";
-
 import {selectPromt} from "6-entities/promts";
 import {useAppDispatch, useAppSelector} from "7-shared/hooks";
 import {ReactComponent as DislikeIcon} from '7-shared/assets/icon/dislike.svg'
@@ -15,10 +14,32 @@ export const SwipeButtons = () => {
 
 	const onClickLikeHandler = () => {
 		dispatch(likePromtThunk(promt.id))
+		if(promt?.image){
+			download(promt.image, promt.value)
+		}
 	}
 
 	const onClickDislikeHandler = () => {
 		dispatch(dislikePromtThunk(promt.id))
+	}
+
+	const download = async (url: string, name: string) => {
+		const a = document.createElement("a");
+		a.href = await toDataURL(url);
+		a.download = name;
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	};
+
+	function toDataURL(url: string) {
+		return fetch(url)
+			.then((response) => {
+				return response.blob();
+			})
+			.then((blob) => {
+				return URL.createObjectURL(blob);
+			});
 	}
 
 	return (

@@ -1,6 +1,11 @@
 import axios from "axios";
 import {JWTToken} from "../lib/jwtToken";
 
+// export const instance = axios.create({
+// 	withCredentials: false,
+// 	baseURL: "http://localhost:8000/api",
+// });
+
 export const instance = axios.create({
 	withCredentials: false,
 	baseURL: "http://109.172.83.22/api",

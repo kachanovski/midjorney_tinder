@@ -1,6 +1,5 @@
 import React from 'react';
 import {Accordion, Anchor, Image, Text} from "@mantine/core";
-import info from './requestInfo.png'
 import curl from './curl.png'
 import network from './network.png'
 
@@ -10,6 +9,9 @@ export const DiscordCurlInfo = () => {
 			<Accordion.Item value="info">
 				<Accordion.Control>Где взять?</Accordion.Control>
 				<Accordion.Panel>
+					<Text weight={700}>
+						ВАЖНО!!! Текстовый файл должен иметь расширение .txt
+					</Text>
 					<Text>
 						1 - Необходимо авторизоваться в веб версии на платформе
 							<Anchor href="https://discord.com/" ml={10} target="_blank">

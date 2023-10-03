@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
-import {userApi, setIsAuth, setUser, setUploadLimit} from "6-entities/user";
+import {userApi, setIsAuth, setUser, setUploadLimit, setAuthError} from "6-entities/user";
 import {JWTToken} from "7-shared/lib/jwtToken";
 import {getUploadLimit} from "./getUploadLimit";
 
@@ -14,6 +14,7 @@ export const getMeThunk = createAsyncThunk<void, void, { state: RootState }>(
 				const limit = getUploadLimit()
 				dispatch(setUploadLimit(limit))
 				dispatch(setUser(res.data))
+				dispatch(setAuthError(null))
 				dispatch(setIsAuth(true))
 			}
 		} catch (error) {

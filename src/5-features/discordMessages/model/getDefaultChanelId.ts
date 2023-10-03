@@ -2,6 +2,12 @@ import {UploadLimit} from "7-shared/lib/uploadLimit";
 
 export const getDefaultChanelId = () => {
 	const limit = UploadLimit.getCurrentValue().limit
+	const custom_chanel_id = localStorage.getItem('discord_chanel_id')
+
+	if(!!custom_chanel_id){
+		return custom_chanel_id
+	}
+
 	if(limit<=50) {
 		return '933565701162168371'
 	}

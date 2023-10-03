@@ -1,6 +1,13 @@
 import React from 'react';
 import {Flex, Text} from '@mantine/core'
-import {DiscordCurlInfo, DiscordCurl, DiscordToken, DiscordTokenInfo} from "4-widgets/settings";
+import {
+	DiscordCurlInfo,
+	DiscordCurl,
+	DiscordToken,
+	DiscordTokenInfo,
+	DiscordChanelUpload,
+	DiscordChanelUploadInfo
+} from "4-widgets/settings";
 
 export const SettingsPage = () => {
 	return (
@@ -8,7 +15,17 @@ export const SettingsPage = () => {
 			<Text size={26} weight={'bold'}>
 				Настройки
 			</Text>
+
 			<Flex direction={"column"} w={'50%'} gap={20}>
+				<Text>Настройка скачивания с определенного канала</Text>
+				<Flex direction={"column"}>
+					<DiscordChanelUploadInfo />
+					<DiscordChanelUpload />
+				</Flex>
+			</Flex>
+
+			<Flex direction={"column"} w={'50%'} gap={20}>
+				<Text>Настройка авторизации для Discord & Bot</Text>
 				<Flex direction={"column"}>
 					<DiscordTokenInfo />
 					<DiscordToken />

@@ -26,7 +26,7 @@ export const SwipeButtons = () => {
 	const download = async (url: string, name: string) => {
 		const a = document.createElement("a");
 		a.href = await toDataURL(url);
-		a.download = `${name}.png`;
+		a.download = `${name.slice(0,85)}.png`;
 		document.body.appendChild(a);
 		a.click();
 		document.body.removeChild(a);

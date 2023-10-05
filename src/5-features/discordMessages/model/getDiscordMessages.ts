@@ -10,9 +10,9 @@ import {JWTToken} from "7-shared/lib/jwtToken";
 import {messageContentSlicer} from "./messageContentSlicer";
 import {getDefaultChanelId} from "./getDefaultChanelId";
 
-export const getDiscordMessagesThunk = createAsyncThunk<void, void, { state: RootState }>(
+export const getDiscordMessagesThunk = createAsyncThunk<void, {id?: string} | void , { state: RootState }>(
 	'promt/messages',
-	async (_, { dispatch, rejectWithValue }) => {
+	async (data, { dispatch, rejectWithValue }) => {
 		try {
 			const limit = UploadLimit.getCurrentValue().limit
 
@@ -26,13 +26,17 @@ export const getDiscordMessagesThunk = createAsyncThunk<void, void, { state: Roo
 			}
 
 			const chanelId = getDefaultChanelId()
-			const message = await discordApi.getMessagesFromChanel(chanelId)
+			const message = await discordApi.getMessagesFromChanel(data?.id || chanelId)
 
 			const promt: Omit<IPromt, 'id'>[] = message.data.map(i => ({
 				discord_id: i.id,
 				value: messageContentSlicer(i.content),
 				image: null
-			})).filter(i => !i?.value?.includes('http')).filter(i => !i?.value?.includes('https'))
+			}))
+				.filter(i => i)
+				.filter(i => !i?.value?.includes('http'))
+				.filter(i => !i?.value?.includes('--video'))
+				.filter(i => !i?.value?.includes('https'))
 
 			const res = await promtApi.setPromts(promt)
 			if(Number(res.data.upload_count)){

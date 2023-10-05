@@ -1,63 +1,35 @@
 import React, {ChangeEvent, useState} from 'react';
 import {Button, Flex, TextInput} from "@mantine/core";
 
-export const DiscordChanelUpload = () => {
-	const [value, setValue] = useState<string>('')
+import {getDiscordMessagesThunk} from "5-features/discordMessages";
+import {useAppDispatch} from "7-shared/hooks";
 
-	const [isEditMode, setIsEditMode] = useState<boolean>(false)
+export const DiscordChanelUpload = () => {
+	const dispatch = useAppDispatch()
+	const [value, setValue] = useState<string>('')
 
 	const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
 		setValue(e.target.value)
 	}
 
 	const onClickBtn = () => {
-		isEditMode
-			? saveToken()
-			: changeMode()
-	}
-
-	const onClickByDefaultBtn = () => {
-		setValue(localStorage.getItem('discord_chanel_id') ?? '')
-		localStorage.setItem('discord_chanel_id', '')
-	}
-
-	const saveToken = () => {
-		setIsEditMode(false)
-		localStorage.setItem('discord_chanel_id',value)
-	}
-
-	const changeMode = () => {
-		setValue(localStorage.getItem('discord_chanel_id') ?? "")
-		setIsEditMode(true)
+		if(value){
+			dispatch(getDiscordMessagesThunk({id: value}))
+		}
 	}
 
 	return (
 		<Flex gap={10} align={'end'}>
-			{
-				isEditMode
-					? <TextInput
+			<TextInput
 						placeholder="Id Канала"
 						label="Id Канала"
 						value={value}
 						onChange={onChangeHandler}
-					/>
-					: <TextInput
-						disabled
-						placeholder="Id Канала"
-						label="Id Канала"
-						value={localStorage.getItem('discord_chanel_id') ?? ""}
-						onChange={onChangeHandler}
-					/>
-			}
+			/>
 
-			<Button color={isEditMode ? 'green' : 'orange'} onClick={onClickBtn}>
-				{isEditMode ? 'Сохранить' : 'Изменить'}
+			<Button color={'green'} onClick={onClickBtn}>
+				Загрузить
 			</Button>
-
-			<Button onClick={onClickByDefaultBtn}>
-				Вернуть по дефолту
-			</Button>
-
 		</Flex>
 	);
 };

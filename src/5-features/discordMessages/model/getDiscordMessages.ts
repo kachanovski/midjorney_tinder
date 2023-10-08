@@ -37,6 +37,8 @@ export const getDiscordMessagesThunk = createAsyncThunk<void, {id?: string} | vo
 				.filter(i => !i?.value?.includes('http'))
 				.filter(i => !i?.value?.includes('--video'))
 				.filter(i => !i?.value?.includes('https'))
+				.filter(i => !i?.value?.includes('5.2'))
+				.slice(0, 50)
 
 			const res = await promtApi.setPromts(promt)
 			if(Number(res.data.upload_count)){

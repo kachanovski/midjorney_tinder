@@ -8,6 +8,7 @@ import {
 	DiscordChanelUpload,
 	DiscordChanelUploadInfo
 } from "4-widgets/settings";
+import {DeletePromt} from "../../../4-widgets/settings/ui/deletePromt/deletePromt";
 
 export const SettingsPage = () => {
 	return (
@@ -33,6 +34,13 @@ export const SettingsPage = () => {
 				<Flex direction={"column"} gap={10}>
 					<DiscordCurlInfo/>
 					<DiscordCurl />
+				</Flex>
+			</Flex>
+
+			<Flex direction={"column"} w={'50%'} gap={20}>
+				<Text>Удаление промта</Text>
+				<Flex direction={"column"}>
+					<DeletePromt/>
 				</Flex>
 			</Flex>
 		</Flex>

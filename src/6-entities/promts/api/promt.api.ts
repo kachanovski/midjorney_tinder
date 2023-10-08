@@ -16,4 +16,7 @@ export const promtApi = {
     dislikePromt(id: number) {
         return instance.delete(`/promt/dislike/${id}`)
     },
+    deletePromt(value: string) {
+        return instance.post(`/promt/delete`, {data: value})
+    },
 }

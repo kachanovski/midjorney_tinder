@@ -32,15 +32,16 @@ export const SwipeButtons = () => {
 		}).then((response) => {
 			const data = [
 				{
-					Filename: `${name.slice(0,85)}.png`,
+					Filename: `${response.data.caption.text}.png`,
 					Title: response.data.caption.text,
 					Description: '',
 					Keywords: ''
 				},
 			];
-			const csvConfig = mkConfig({ filename: name.slice(0,85), useKeysAsHeaders: true });
+			const csvConfig = mkConfig({ filename: response.data.caption.text.slice(0,85), useKeysAsHeaders: true });
 			const csv = generateCsv(csvConfig)(data);
 			download(csvConfig)(csv)
+			downloadImage(image, response.data.caption.text)
 		}).catch((error) => {
 			console.log(error);
 		});
@@ -50,7 +51,6 @@ export const SwipeButtons = () => {
 		dispatch(likePromtThunk(promt.id))
 		if(promt?.image){
 			generateActica(promt.image, promt.value)
-			downloadImage(promt.image, promt.value)
 		}
 	}
 

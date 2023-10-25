@@ -3,7 +3,7 @@ import {JWTToken} from "../lib/jwtToken";
 
 // export const instance = axios.create({
 // 	withCredentials: false,
-// 	baseURL: "http://localhost:8000/api",
+// 	baseURL: "http://109.172.83.22/api",
 // });
 
 export const instance = axios.create({

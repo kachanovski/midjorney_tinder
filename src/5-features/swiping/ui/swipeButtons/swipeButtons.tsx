@@ -7,15 +7,50 @@ import {ReactComponent as LikeIcon} from '7-shared/assets/icon/like.svg'
 
 import {likePromtThunk} from "../../model/likePromt";
 import {dislikePromtThunk} from "../../model/dislikePromt";
+import axios from "axios";
+import { mkConfig, generateCsv, download } from "export-to-csv";
 
 export const SwipeButtons = () => {
 	const dispatch = useAppDispatch()
 	const promt = useAppSelector(selectPromt)
 
-	const onClickLikeHandler = () => {
+	const generateActica = async (image: string, name: string) => {
+		const requestData = {
+			tkn: 'FA944CB5-748A-48E8-8DDB-F83547F1C46D57A88F31-C997-4FCE-B215-0689515347C4',  // visit https://astica.ai
+			modelVersion: '2.1_full', // 1.0_full, 2.0_full, or 2.1_full
+			input: image,
+			visionParams: 'gpt, describe', // comma separated, defaults to all
+		};
+
+		axios({
+			method: 'post',
+			url: 'https://vision.astica.ai/describe',
+			data: requestData,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}).then((response) => {
+			const data = [
+				{
+					Filename: `${name.slice(0,85)}.png`,
+					Title: response.data.caption.text,
+					Description: '',
+					Keywords: ''
+				},
+			];
+			const csvConfig = mkConfig({ filename: name.slice(0,85), useKeysAsHeaders: true });
+			const csv = generateCsv(csvConfig)(data);
+			download(csvConfig)(csv)
+		}).catch((error) => {
+			console.log(error);
+		});
+	}
+
+	const onClickLikeHandler = async () => {
 		dispatch(likePromtThunk(promt.id))
 		if(promt?.image){
-			download(promt.image, promt.value)
+			generateActica(promt.image, promt.value)
+			downloadImage(promt.image, promt.value)
 		}
 	}
 
@@ -23,7 +58,7 @@ export const SwipeButtons = () => {
 		dispatch(dislikePromtThunk(promt.id))
 	}
 
-	const download = async (url: string, name: string) => {
+	const downloadImage = async (url: string, name: string) => {
 		const a = document.createElement("a");
 		a.href = await toDataURL(url);
 		a.download = `${name.slice(0,85)}.png`;

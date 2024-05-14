@@ -14,19 +14,11 @@ export const getDiscordMessagesThunk = createAsyncThunk<void, {id?: string} | vo
 	'promt/messages',
 	async (data, { dispatch, rejectWithValue }) => {
 		try {
-			const limit = UploadLimit.getCurrentValue().limit
-
-			if(limit <=0 ){
-				notifications.show({
-					color: 'red',
-					title: 'Лимит исчерпан',
-					message: 'Лимит загрузки сообщений: 1000',
-				})
-				return rejectWithValue('error');
+			if(!data?.id){
+				return
 			}
 
-			const chanelId = getDefaultChanelId()
-			const message = await discordApi.getMessagesFromChanel(data?.id || chanelId)
+			const message = await discordApi.getMessagesFromChanel(data?.id)
 
 			const promt: Omit<IPromt, 'id'>[] = message.data.map(i => ({
 				discord_id: i.id,
@@ -40,11 +32,7 @@ export const getDiscordMessagesThunk = createAsyncThunk<void, {id?: string} | vo
 				.filter(i => !i?.value?.includes('5.2'))
 				.slice(0, 50)
 
-			const res = await promtApi.setPromts(promt)
-			if(Number(res.data.upload_count)){
-				UploadLimit.updateUploadLimit(Number(res.data.upload_count))
-				dispatch(setUploadLimit(limit - Number(res.data.upload_count)))
-			}
+			await promtApi.setPromts(promt)
 
 		} catch (error: any) {
 			const status = error?.response?.request?.status

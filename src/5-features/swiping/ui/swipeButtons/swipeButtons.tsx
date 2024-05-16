@@ -17,7 +17,7 @@ export const SwipeButtons = () => {
 	const generateActica = async (image: string, name: string) => {
 		const requestData = {
 			tkn: 'FA944CB5-748A-48E8-8DDB-F83547F1C46D57A88F31-C997-4FCE-B215-0689515347C4',  // visit https://astica.ai
-			modelVersion: '2.1_full', // 1.0_full, 2.0_full, or 2.1_full
+			modelVersion: '2.5_full', // 1.0_full, 2.0_full, or 2.1_full
 			input: image,
 			visionParams: 'describe', // comma separated, defaults to all
 		};
